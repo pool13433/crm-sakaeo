@@ -43,7 +43,7 @@ class Person extends CActiveRecord {
             array('per_email, per_username, per_password', 'length', 'max' => 50),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('per_id, per_serial, per_code,  per_username, per_password, per_fname, per_lname, per_idcard, per_gender, per_email, per_mobile, per_address, per_birthday, per_status', 'safe', 'on' => 'search'),
+            array('per_id, per_serial, per_code,  per_username, per_password, per_fname, per_lname, per_idcard, per_gender, per_email, per_mobile, per_address, per_birthday, per_status,priv_id ', 'safe', 'on' => 'search'),
         );
     }
 
@@ -75,7 +75,8 @@ class Person extends CActiveRecord {
             'per_mobile' => 'Per Mobile',
             'per_address' => 'Per Address',
             'per_birthday' => 'Per Birthday',
-            'per_status' => 'Per Status',            
+            'per_status' => 'Per Status',      
+            'priv_id' => 'Privilege Id',
         );
     }
 

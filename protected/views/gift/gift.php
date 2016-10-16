@@ -13,6 +13,7 @@
                 <th>รหัสของรางวัล</th>
                 <th>ชื่อของรางวัล</th>
                 <th>ประเภท</th>
+                <th>สถานะ</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -29,6 +30,7 @@
                         <td><?= $row['gift_code'] ?></td>
                         <td><?= $row['gift_name'] ?></td>
                         <td><?= $row['type_name'] ?></td>
+                        <td><?= $row['gift_status'] ?></td>
                         <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/gift/FormGift/<?= $row['gift_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>
@@ -44,7 +46,7 @@
             } else {
                 ?>
                 <tr>
-                    <td colspan="10" class="ui text-center">ไม่พบข้อมูลประวัติการแลกขอลรางวัล</td>
+                    <td colspan="10" class="ui text-center">ไม่พบข้อมูลขอลรางวัล</td>
                 </tr>
             <?php } ?>
         </tbody>

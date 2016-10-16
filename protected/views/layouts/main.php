@@ -9,14 +9,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <style type="text/css">
+            .ui.sidebar {
+                overflow: visible !important;
+            }
             @font-face {
                 font-family: 'Athiti';
                 font-style: normal;
                 font-weight: 400;
-                src: local('Athiti'), local('Athiti-Regular'), url(<?=$baseUrl.'/fonts/athiti.woff2'?>) format('woff2');
+                src: local('Athiti'), local('Athiti-Regular'), url(<?= $baseUrl . '/fonts/athiti.woff2' ?>) format('woff2');
                 unicode-range: U+0E01-0E5B, U+200B-200D, U+25CC;
             }
         </style>
+        <script type="text/javascript"> YII_URL_SERVICE = '<?= $baseUrl ?>'</script>
     </head>
     <body ng-app="crmApp" style="font-family: 'Athiti', sans-serif;">
         <?php $this->renderPartial('/layouts/navbar') ?>

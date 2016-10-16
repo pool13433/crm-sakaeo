@@ -19,7 +19,7 @@
                                 <div class="floated">คะแนน <?= $data['gift_point'] ?> คะแนน</div>
                             </div>
                             <div class="image">
-                                <img src="/images/avatar2/large/kristy.png">
+                                <img src="<?=$baseUrl?>/images/coming-soon.png">
                             </div>
                             <div class="content">
                                 <a class="header"><?= $data['gift_name'] ?></a>
@@ -68,7 +68,12 @@
                     <ol><li value=""><?= $point ?></li></ol>
                 </li>
                 <li value="*"> Point สำหรับการใช้แลก Point ในรอบนี้
-                    <ol><li value=""><?= $pointUsage ?></li></ol>
+                    <ol>
+                        <li value="">
+                            <?= $pointUsage ?>
+                            <input type="hidden" ng-model="vm.point" ng-init=" vm.point = <?= $pointUsage ?>"/>
+                        </li>
+                    </ol>
                 </li>
                 <li value="*"> Point คงเหลือ
                     <ol><li value=""><?= ($point - $pointUsage) ?></li></ol>

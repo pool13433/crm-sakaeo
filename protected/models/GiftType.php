@@ -26,11 +26,11 @@ class GiftType extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('type_name, type_detail, type_date', 'required'),
+            array('type_name, type_detail, type_date,type_status', 'required'),
             array('type_name, type_image', 'length', 'max' => 150),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('type_id, type_name, type_detail, type_date, type_image', 'safe', 'on' => 'search'),
+            array('type_id, type_name, type_detail, type_date, type_image,type_status', 'safe', 'on' => 'search'),
         );
     }
 
@@ -55,6 +55,7 @@ class GiftType extends CActiveRecord {
             'type_detail' => 'Type Detail',
             'type_date' => 'Type Date',
             'type_image' => 'Type Image',
+            'type_status' => 'Type Status'
         );
     }
 

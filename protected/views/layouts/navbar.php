@@ -8,7 +8,7 @@
             CRM 
         </a>
         <div class="right menu">
-            <div class="ui dropdown item">
+<!--            <div class="ui dropdown item">
                 จัดการเกี่ยวกับโปรโมชั่น <i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="<?= $baseUrl ?>/promotion/PromotionType"><i class="glyphicon glyphicon-th-large"></i> จัดการประเภทโปรโมชั่น</a>
@@ -28,15 +28,15 @@
                     <a class="item"  href="<?= $baseUrl ?>/product/productType"><i class="glyphicon glyphicon-th-large"></i> จัดการประเภทของสินค้า</a>
                     <a class="item"  href="<?= $baseUrl ?>/product/product"><i class="glyphicon glyphicon-shopping-cart"></i> จัดการสินค้า</a>
                 </div>
-            </div>
+            </div>-->
             <?php if (empty(Yii::app()->session['member'])) { ?>
                 <a href="<?= $baseUrl . '/site/login' ?>" class="item">
                     <i class="sign in icon"></i>
                     เข้าระบบ
                 </a>         
-                <a href="#" class="item">
+<!--                <a href="#" class="item">
                     <i class="add user icon"></i> ลงทะเบียน
-                </a>
+                </a>-->
             <?php } else { ?>
                 <a href="<?= $baseUrl . '/site/logout' ?>" class="item">
                     <i class="sign out icon"></i> ออกจากระบบ

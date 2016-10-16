@@ -15,6 +15,7 @@
                 <th>ชื่อของสินค้า</th>
                 <th>ราคาสินค้า</th>
                 <th>ประเภทสินค้า</th>
+                <th>สถานะสินค้า</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -32,6 +33,7 @@
                         <td><?= $row['prod_name'] ?></td>
                         <td><?= $row['prod_price'] ?></td>
                         <td><?= $row['type_name'] ?></td>
+                        <td><?= $row['prod_status'] ?></td>
                         <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/product/FormProduct/<?= $row['prod_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>

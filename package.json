@@ -14,8 +14,11 @@
   "dependencies": {
     "angular": "^1.5.8",
     "bootstrap": "^3.3.7",
+    "datatables.net": "^1.10.12",
+    "datatables.net-dt": "^1.10.12",
     "jquery": "^3.1.1",
     "jquery-ui-dist": "^1.12.1",
+    "quagga": "^0.11.5",
     "semantic-ui-css": "^2.2.4"
   }
 }

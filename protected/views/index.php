@@ -38,42 +38,42 @@
         <div class="ui attached segment">
             <div class="ui cards stackable four">
                 <div class="ui card">
-                    <a class="image" href="<?= $baseUrl ?>/site/points/<?= $serialCode ?>">
+                    <a class="image" href="<?= $baseUrl ?>/site/points/<?= $serialCode ?>" target="_blank">
                         <img src="<?= $baseUrl ?>/images/icons/256x256-icon-star.png"/>
                     </a>
                     <div class="content">
-                        <h2>แต้มสะสม <?= $person['cal_points'] ?> แต้ม</h2>
+                        <h2>แต้มสะสม <?= (empty($person['cal_points']) ? 0 : $person['cal_points']) ?> แต้ม</h2>
                     </div>
                     <div class="extra content">
-                        <a class="ui button fluid green" href="<?= $baseUrl ?>/site/points/<?= $serialCode ?>">
+                        <a class="ui button fluid green" href="<?= $baseUrl ?>/site/points/<?= $serialCode ?>" target="_blank">
                             รายละเอียด
                         </a>
                     </div>
                 </div>
 
                 <div class="ui card">
-                    <a class="image" href="<?= $baseUrl ?>/site/transactions/<?= $serialCode ?>">
+                    <a class="image" href="<?= $baseUrl ?>/site/transactions/<?= $serialCode ?>" target="_blank">
                         <img src="<?= $baseUrl ?>/images/icons/256x256-icon-money.png"/>
                     </a>
                     <div class="content">
-                        <h2>การใช้บริการ <?= $person['cal_tran'] ?> ครั้ง</h2>
+                        <h2>การใช้บริการ <?= (empty($person['cal_tran']) ? 0 : $person['cal_tran']) ?> ครั้ง</h2>
                     </div>
                     <div class="extra content">
-                        <a class="ui button fluid blue" href="<?= $baseUrl ?>/site/transactions/<?= $serialCode ?>">
+                        <a class="ui button fluid blue" href="<?= $baseUrl ?>/site/transactions/<?= $serialCode ?>" target="_blank">
                             รายละเอียด
                         </a>
                     </div>
                 </div>
 
                 <div class="ui card">
-                    <a class="image" href="<?= $baseUrl ?>/site/gifts/<?= $serialCode ?>">
+                    <a class="image" href="<?= $baseUrl ?>/site/gifts/<?= $serialCode ?>" target="_blank">
                         <img src="<?= $baseUrl ?>/images/icons/256x256-icon-gift.png"/>
                     </a>
                     <div class="content">
-                        <h2>รางวัลที่แลกไป <?= $person['cal_gift'] ?> ชิ้น</h2>
+                        <h2>รางวัลที่แลกไป <?= (empty($person['cal_gift']) ? 0 : $person['cal_gift']) ?> ชิ้น</h2>
                     </div>
                     <div class="extra content">
-                        <a class="ui button fluid orange" href="<?= $baseUrl ?>/site/gifts/<?= $serialCode ?>">
+                        <a class="ui button fluid orange" href="<?= $baseUrl ?>/site/gifts/<?= $serialCode ?>" target="_blank">
                             รายละเอียด
                         </a>
                     </div>
@@ -82,9 +82,18 @@
             </div>
         </div>
     <?php } else { ?>
-        <h1 class="text-center">ไม่พบข้อมูลผู้ใช้งาน</h1>
-        <a class="btn btn-primary btn-block btn-lg">ลงทะเบียน</a>
+        <div class="ui info message">
+            <i class="close icon"></i>
+            <div class="header">
+                ไม่พบข้อมูลผู้ใช้งาน
+            </div>
+        </div>
     <?php } ?>
 <?php } else { ?>
-    <h1 class="text-center">ไม่พบข้อมูลผู้ใช้งาน</h1>
+    <div class="ui info message">
+            <i class="close icon"></i>
+            <div class="header">
+                ไม่พบข้อมูลผู้ใช้งาน
+            </div>
+        </div>
 <?php } ?>

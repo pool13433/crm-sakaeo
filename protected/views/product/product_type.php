@@ -11,9 +11,11 @@
         <thead>
             <tr>
                 <th>ลำดับ</th>
+                <th>โค๊ดประเภทของสินค้า</th>
                 <th>ชื่อประเภทของสินค้า</th>
                 <th>เกณฑ์ราคาต่ำ</th>
                 <th>เกณฑ์คะแนน</th>
+                <th>สถานะ</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -27,9 +29,11 @@
                     ?>
                     <tr>
                         <td class="text-center"><?= ($index + 1) ?></td>
+                        <td><?= $row['type_code'] ?></td>
                         <td><?= $row['type_name'] ?></td>
                         <td><?= $row['type_min_price'] ?></td>
                         <td><?= $row['type_points'] ?></td>
+                        <td><?= $row['type_status'] ?></td>
                         <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/product/FormProductType/<?= $row['type_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>

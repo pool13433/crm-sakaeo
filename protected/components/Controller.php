@@ -31,12 +31,21 @@ class Controller extends CController {
             //C:\xampp5.5\htdocs\CRM\node_modules\semantic-ui-css\semantic.min.css
             $cs->registerCssFile($baseUrl.'/node_modules/semantic-ui-css/semantic.css');
             $cs->registerCssFile($baseUrl.'/node_modules/jquery-ui-dist/jquery-ui.css');
+            $cs->registerCssFile($baseUrl.'/node_modules/datatables.net-dt/css/jquery.dataTables.css');
+            $cs->registerCssFile($baseUrl.'/css/datatable-semantic/dataTables.semanticui.min.css');
+            $cs->registerCssFile($baseUrl.'/css/datatable-semantic/responsive.semanticui.min.css');
+           
             $cs->registerScriptFile($baseUrl.'/node_modules/jquery/dist/jquery.js',CClientScript::POS_END);       
             $cs->registerScriptFile($baseUrl.'/node_modules/semantic-ui-css/semantic.min.js',CClientScript::POS_END);                   
             $cs->registerScriptFile($baseUrl.'/node_modules/jquery-ui-dist/jquery-ui.js',CClientScript::POS_END);   
+            $cs->registerScriptFile($baseUrl.'/node_modules/datatables.net/js/jquery.dataTables.js',CClientScript::POS_END);   
+            $cs->registerScriptFile($baseUrl.'/js/datatable-semantic/dataTables.semanticui.min.js',CClientScript::POS_END);   
+            
             
             $cs->registerScriptFile($baseUrl.'/node_modules/angular/angular.min.js',CClientScript::POS_END);   
+            $cs->registerScriptFile($baseUrl.'/node_modules/quagga/dist/quagga.min.js',CClientScript::POS_END);               
             $cs->registerScriptFile($baseUrl.'/js/app.js',CClientScript::POS_END);   
+            //$cs->registerScriptFile(' app.constant(\'URL_SERVICE\', \'http://localhost/CRM\') ',CClientScript::POS_END);   
             $cs->registerScriptFile($baseUrl.'/js/app.service.js',CClientScript::POS_END);   
             $cs->registerScriptFile($baseUrl.'/js/app.factory.js',CClientScript::POS_END);   
             $cs->registerScriptFile($baseUrl.'/js/app.controller.js',CClientScript::POS_END);             

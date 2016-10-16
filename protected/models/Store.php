@@ -8,6 +8,8 @@
  * @property string $store_code
  * @property string $store_name
  * @property string $store_address
+ * @property string $store_mobile
+ * @property string $store_status
  * @property string $store_date
  */
 class Store extends CActiveRecord
@@ -28,12 +30,13 @@ class Store extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('store_code, store_name, store_address, store_date', 'required'),
-			array('store_code', 'length', 'max'=>15),
+			array('store_code, store_name, store_address, store_mobile, store_status, store_date', 'required'),
+			array('store_code, store_mobile', 'length', 'max'=>15),
 			array('store_name', 'length', 'max'=>150),
+			array('store_status', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('store_id, store_code, store_name, store_address, store_date', 'safe', 'on'=>'search'),
+			array('store_id, store_code, store_name, store_address, store_mobile, store_status, store_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,6 +61,8 @@ class Store extends CActiveRecord
 			'store_code' => 'Store Code',
 			'store_name' => 'Store Name',
 			'store_address' => 'Store Address',
+			'store_mobile' => 'Store Mobile',
+			'store_status' => 'Store Status',
 			'store_date' => 'Store Date',
 		);
 	}
@@ -84,6 +89,8 @@ class Store extends CActiveRecord
 		$criteria->compare('store_code',$this->store_code,true);
 		$criteria->compare('store_name',$this->store_name,true);
 		$criteria->compare('store_address',$this->store_address,true);
+		$criteria->compare('store_mobile',$this->store_mobile,true);
+		$criteria->compare('store_status',$this->store_status,true);
 		$criteria->compare('store_date',$this->store_date,true);
 
 		return new CActiveDataProvider($this, array(

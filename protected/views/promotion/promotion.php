@@ -10,12 +10,14 @@
         <thead>
             <tr>
                 <th>ลำดับ</th>
+                <th>โค๊ดโปรโมชั่น</th>
                 <th>ชื่อโปรโมชั่น</th>
                 <th>รายละเอียด</th>
                 <th>ประเภท</th>
                 <th>วันที่เริ่ม</th>
                 <th>วันทีสิ้นสุด</th>
                 <th>วันที่สร้าง</th>
+                <th>สถานะ</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -29,12 +31,14 @@
                     ?>
                     <tr>
                         <td class="text-center"><?= ($index + 1) ?></td>
+                        <td><?= $row['prom_code'] ?></td>
                         <td><?= $row['prom_name'] ?></td>
                         <td><?= $row['prom_detail'] ?></td>
                         <td><?= $row['type_name'] ?></td>
                         <td><?= $row['prom_startdate'] ?></td>
                         <td><?= $row['prom_enddate'] ?></td>
                         <td><?= $row['prom_date'] ?></td>
+                        <td><?= $row['prom_status'] ?></td>
                         <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/promotion/FormPromotion/<?= $row['prom_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>

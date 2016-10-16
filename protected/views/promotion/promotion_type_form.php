@@ -11,18 +11,35 @@
     <form class="ui form"  action="<?= $baseUrl ?>/promotion/SavePromotionType" method="post">
         <div class="three fields">
             <div class="field">
-                <label>ชื่อประเภทโปรโมชั่น</label>
+                <label>โค๊ดประเภทโปรโมชั่น <stong style="color:red;">*</stong></label>
                 <input type="hidden" name="data[type_id]" value="<?= $promType->type_id ?>">
+                <input type="text" name="data[type_code]" placeholder="โค๊ดประเภทโปรโมชั่น" required value="<?= $promType->type_code ?>">
+            </div>
+            <div class="field">
+                <label>ชื่อประเภทโปรโมชั่น <stong style="color:red;">*</stong></label>
                 <input type="text" name="data[type_name]" placeholder="ชื่อประเภทโปรโมชั่น" required value="<?= $promType->type_name ?>">
             </div>
         </div>
         <div class="field">
             <div class="field">
-                <label>ชื่อประเภทโปรโมชั่น</label>
+                <label>ชื่อประเภทโปรโมชั่น <stong style="color:red;">*</stong></label>
                 <textarea class="form-control"  name="data[type_detail]" rows="8" cols="40" placeholder="รายประเภทละเอียดโปรโมชั่น" required><?= $promType->type_detail ?></textarea>
             </div>
         </div>
-        <button type="submit" class="ui button green" onclick="return confirm('บันทึก ?')">
+        <div class="field">
+            <label>สถานะของประเภทโปรโมชั่น<stong style="color:red;">*</stong></label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input name="data[type_status]" <?= ($promType['type_status'] == 'active' ? 'checked' : '') ?> tabindex="0"  type="radio" required value="active">
+                    <label>เปิด</label>
+                </div>
+                <div class="ui radio checkbox">
+                    <input name="data[type_status]" tabindex="0" <?= ($promType['type_status'] == 'inactive' ? 'checked' : '') ?>  type="radio" required value="inactive">
+                    <label>ปิด</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="ui button green">
             <i class="save icon"></i> บันทึก
         </button>
         <button type="reset" class="ui button orange">

@@ -4,7 +4,12 @@ class GiftController extends Controller {
 
     public function actionGift() {
         $gift = Yii::app()->db->createCommand()
-                ->select(' g.*,t.*')
+                ->select("g.*,t.*,
+                              (CASE g.gift_status 
+                                    WHEN 'active' THEN '<a class=\"ui green label\">เปิดการใช้งาน</a>'
+                                    WHEN 'inactive' THEN '<a class=\"ui red label\">ปิดการใชงาน</a>'
+                                 END) as   gift_status
+                        ")
                 ->from('gift g')
                 ->join('gift_type t', 't.type_id = g.type_id')
                 ->queryAll();
@@ -42,6 +47,7 @@ class GiftController extends Controller {
             $gift->gift_no = $form['gift_no'];
             $gift->gift_point = $form['gift_point'];
             $gift->type_id = $form['type_id'];
+            $gift->gift_status = $form['gift_status'];
 
             if ($gift->save()) {
                 $this->redirect(array('Gift'));
@@ -63,7 +69,17 @@ class GiftController extends Controller {
 
     public function actionGiftType() {
 
-        $giftTypes = GiftType::model()->findAll();
+        $giftTypes = Yii::app()->db->createCommand()
+                ->select("
+                    t.*,
+                     (CASE t.type_status 
+                                    WHEN 'active' THEN '<a class=\"ui green label\">เปิดการใช้งาน</a>'
+                                    WHEN 'inactive' THEN '<a class=\"ui red label\">ปิดการใชงาน</a>'
+                                 END) as   type_status
+                 ")
+                ->from('gift_type t')
+                ->order('t.type_id ASC')
+                ->queryAll();
 
         $this->render('/gift/gift_type', array(
             'giftType' => $giftTypes
@@ -90,10 +106,12 @@ class GiftController extends Controller {
                 $id = $form['type_id'];
                 $giftType = GiftType::model()->findByPk($id);
             }
+            $giftType->type_code = $form['type_code'];
             $giftType->type_name = $form['type_name'];
             $giftType->type_detail = $form['type_detail'];
             $giftType->type_date = new CDbExpression('NOW()');
             $giftType->type_image = 'xxxx';
+            $giftType->type_status = $form['type_status'];
 
             if ($giftType->save()) {
                 $this->redirect(array('GiftType'));

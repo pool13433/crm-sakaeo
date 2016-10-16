@@ -28,12 +28,12 @@ class Promotion extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('prom_name, prom_detail, type_id, prom_startdate, prom_enddate, prom_date', 'required'),
+            array('prom_code,prom_name, prom_detail, type_id, prom_startdate, prom_enddate, prom_date', 'required'),
             array('type_id', 'numerical', 'integerOnly' => true),
             array('prom_name', 'length', 'max' => 150),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('prom_id, prom_name, prom_detail, type_id, prom_startdate, prom_enddate, prom_date', 'safe', 'on' => 'search'),
+            array('prom_id,prom_code, prom_name, prom_detail, type_id, prom_startdate, prom_enddate, prom_date', 'safe', 'on' => 'search'),
         );
     }
 
@@ -53,6 +53,7 @@ class Promotion extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'prom_id' => 'Prom',
+            'prom_code' => 'Prom Code',
             'prom_name' => 'Prom Name',
             'prom_detail' => 'Prom Detail',
             'type_id' => 'Type',
@@ -80,6 +81,7 @@ class Promotion extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('prom_id', $this->prom_id);
+        $criteria->compare('prom_code', $this->prom_code, true);
         $criteria->compare('prom_name', $this->prom_name, true);
         $criteria->compare('prom_detail', $this->prom_detail, true);
         $criteria->compare('type_id', $this->type_id);

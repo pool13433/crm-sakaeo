@@ -10,8 +10,10 @@
         <thead>
             <tr>
                 <th>ลำดับ</th>
+                <th>รหัสประเภทของรางวัล</th>
                 <th>ชื่อประเภทของรางวัล</th>
                 <th>รายละเอียด</th>
+                <th>สถานะ</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -25,8 +27,10 @@
                     ?>
                     <tr>
                         <td class="text-center"><?= ($index + 1) ?></td>
+                        <td><?= $row['type_code'] ?></td>
                         <td><?= $row['type_name'] ?></td>
                         <td><?= $row['type_detail'] ?></td>
+                        <td><?= $row['type_status'] ?></td>
                         <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/gift/FormGiftType/<?= $row['type_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>

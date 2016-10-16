@@ -3,7 +3,17 @@
 class ProductController extends Controller {
 
     public function actionProductType() {
-        $prodType = Type::model()->findAll();
+        $prodType = Yii::app()->db->createCommand()
+                ->select("
+                            t.*
+                             , (CASE t.type_status 
+                                WHEN 'active' THEN '<a class=\"ui green label\">เปิดการใช้งาน</a>'
+                                WHEN 'inactive' THEN '<a class=\"ui red label\">ปิดการใชงาน</a>'
+                             END) as   type_status
+                        ")
+                ->from('type t')
+                ->order('t.type_name ASC')
+                ->queryAll();
 
         $this->render('/product/product_type', array(
             'prodType' => $prodType
@@ -30,10 +40,12 @@ class ProductController extends Controller {
                 $id = $form['type_id'];
                 $prodType = Type::model()->findByPk($id);
             }
+            $prodType->type_code = $form['type_code'];
             $prodType->type_name = $form['type_name'];
             $prodType->type_min_price = $form['type_min_price'];
             $prodType->type_date = new CDbExpression('NOW()');
             $prodType->type_points = $form['type_points'];
+            $prodType->type_status = $form['type_status'];
 
             if ($prodType->save()) {
                 $this->redirect(array('ProductType'));
@@ -55,7 +67,13 @@ class ProductController extends Controller {
 
     public function actionProduct() {
         $product = Yii::app()->db->createCommand()
-                ->select(' p.*,t.*')
+                ->select(" p.*,t.*
+                        , (CASE p.prod_status 
+                                WHEN 'active' THEN '<a class=\"ui green label\">เปิดการใช้งาน</a>'
+                                WHEN 'inactive' THEN '<a class=\"ui red label\">ปิดการใชงาน</a>'
+                             END) as   prod_status
+                        
+                 ")
                 ->from('product p')
                 ->join('type t', 't.type_id = p.type_id')
                 ->queryAll();
@@ -64,7 +82,7 @@ class ProductController extends Controller {
             'product' => $product
         ));
     }
-    
+
     public function actionFormProduct($id = null) {
         if (empty($id)) {
             $product = new Product();
@@ -79,7 +97,7 @@ class ProductController extends Controller {
             'stores' => $stores
         ));
     }
-    
+
     public function actionSaveProduct() {
         if (!empty($_POST)) {
             $form = $_POST['data'];
@@ -95,7 +113,7 @@ class ProductController extends Controller {
             $prod->prod_price = $form['prod_price'];
             $prod->type_id = $form['type_id'];
             $prod->store_id = $form['store_id'];
-
+            $prod->prod_status = $form['prod_status'];
             if ($prod->save()) {
                 $this->redirect(array('Product'));
             } else {
@@ -103,7 +121,7 @@ class ProductController extends Controller {
             }
         }
     }
-    
+
     public function actionDeleteProduct($id) {
         if (!empty($id)) {
             if (Product::model()->deleteByPk($id)) {

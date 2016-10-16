@@ -27,13 +27,13 @@ class Gift extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('gift_code, gift_name, gift_date, gift_no, gift_point, type_id', 'required'),
+            array('gift_code, gift_name, gift_date, gift_no, gift_point, type_id,gift_status', 'required'),
             array('gift_no, gift_point, type_id', 'numerical', 'integerOnly' => true),
             array('gift_code', 'length', 'max' => 15),
             array('gift_name', 'length', 'max' => 150),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('gift_id, gift_code, gift_name, gift_date, gift_no, gift_point, type_id', 'safe', 'on' => 'search'),
+            array('gift_id, gift_code, gift_name, gift_date, gift_no, gift_point, type_id,gift_status', 'safe', 'on' => 'search'),
         );
     }
 
@@ -59,7 +59,8 @@ class Gift extends CActiveRecord {
             'gift_date' => 'Gift Date',
             'gift_no' => 'Gift No',
             'gift_point' => 'Gift Point',
-            'type_id' => 'Gift Type'
+            'type_id' => 'Gift Type',
+            'gift_status' => 'Gift Status'
         );
     }
 

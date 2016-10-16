@@ -1,5 +1,186 @@
-app.controller('LoginController', LoginController)
-        .controller('CartController', CartController);
+app.controller('MemberController', MemberController)
+        .controller('CartController', CartController)
+        .controller('BarcodeController', BarcodeController)
+        .controller('SalesController', SalesController);
+
+function SalesController(CRMService, QuaggsJSService, $log, $window, $timeout) {
+    var vm = this;
+    this.productChooseList = [];
+    this.genarateKey = {};
+    this.openCamera = function () {
+        $('#modalCamera').modal('show');
+        QuaggsJSService.initInstance('#camera')
+                .then(function success(response) {
+                    Quagga.onDetected(function (data) {
+                        //console.log(' ===>> Detecting ');
+                        console.log(data.codeResult.code);
+                        if (data.codeResult.code.length > 1) {
+                            Quagga.stop();
+                            $timeout(function () {
+                                var serial = data.codeResult.code;
+                                //vm.result = data.codeResult.code;
+                                vm.isLoading = false;
+                                CRMService.getCustomer(serial)
+                                        .then(function success(customer) {
+                                            console.log(customer);
+                                            if (customer !== null) {
+                                                $timeout(function () {
+                                                    mappingCustomer(customer);
+                                                }, 500);
+                                            } else {
+                                                $window.alert('ไม่พบข้อมูลลูกค้าในระบบ');
+                                            }
+                                            $('#modalCamera').modal('hide');
+                                        }, function fail(e) {
+                                            $log.error(e);
+                                        });
+                            }, 500);
+                        }
+                    });
+                }, function fail(e) {
+                    $log.error(e);
+                });
+    }
+
+    function mappingCustomer(customer) {
+        vm.customerId = customer.per_id;
+        vm.customerSerial = customer.per_serial;
+        vm.customerFname = customer.per_fname;
+        vm.customerLname = customer.per_lname;
+    }
+
+    this.findProduct = function () {
+        var input = this.product;
+        CRMService.getProducts(input)
+                .then(function success(response) {
+                    vm.productList = response;
+                    $('#modalProduct').modal('show');
+                }, function fail(e) {
+                    $log.error(e);
+                });
+    }
+
+    this.findCustomer = function () {
+        var input = this.customer;
+        CRMService.getCustomers(input)
+                .then(function success(response) {
+                    vm.customerList = response;
+                    $('#modalCustomer').modal('show');
+                }, function fail(e) {
+                    $log.error(e);
+                });
+    }
+    this.chooseProduct = function (product) {
+        var listSize = vm.productChooseList.length;
+        vm.productChooseList.push(product);
+        vm.genarateKey[listSize] = '0';
+        $('#modalProduct').modal('hide');
+    }
+    this.chooseCustomer = function (customer) {
+        vm.customerId = customer.per_id;
+        vm.customerSerial = customer.per_serial;
+        vm.customerFname = customer.per_fname;
+        vm.customerLname = customer.per_lname;
+        $('#modalCustomer').modal('hide');
+    }
+    this.removeProduct = function (index) {
+        console.log(index);
+        vm.productChooseList.splice(index, 1);
+    }
+    this.resetSales = function () {
+        vm.productChooseList = [];
+    }
+    this.submitSales = function () {
+        var customer = {
+            customerId: vm.customerId,
+            customerSerial: vm.customerSerial,
+            customerFname: vm.customerFname,
+            customerLname: vm.customerLname,
+            storeId: vm.store
+        };
+        if (vm.store === undefined) {
+            $window.alert('กรุณาเลือก store ที่จำหน่าย');
+        } else if (vm.customerId === undefined) {
+            $window.alert('กรุณาใส่ข้อมูลลูกค้า');
+        } else if (vm.productChooseList.length === 0) {
+            $window.alert('กรุณาเลือก สินค้าเพื่อจำหน่ายอย่างน้อย 1 ชิ้น');
+        } else {
+            var productsFinal = mapProductNumber();
+            //vm.productChooseList = productsFinal;
+            //console.log(productsFinal);
+            var isConfirm = $window.confirm('ยืนยันการบันทึกข้อมูลการขายนี้ ใช่ หรือ ไม่');
+            if (isConfirm) {
+                CRMService.saveSales(customer, productsFinal)
+                        .then(function success(response) {
+                            $window.alert(response.message);
+                            if (response.status) {
+                                $window.location.href = response.redirect;
+                            }
+                        }, function fail(e) {
+                            $log.error(e);
+                        });
+            }
+        }
+    }
+
+    function mapProductNumber() {
+        var products = [];
+        angular.forEach(vm.productChooseList, function (product, _index) {
+            var _number = vm.genarateKey[_index];
+            //console.log(product.prod_number);
+            //console.log(_number);
+            product['prod_number'] = _number;
+            products.push(product);
+        });
+        return products;
+    }
+}
+
+function BarcodeController(QuaggsJSService, CRMService, $log, $timeout) {
+    var vm = this;
+    if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia !== null) {//=== 'function') {
+// safely access `navigator.mediaDevices.getUserMedia`
+        vm.result = 'yyyyyyy';
+        this.openCamera = function () {
+            $('#camera').empty();
+            vm.isLoading = true;
+            QuaggsJSService.initInstance('#camera')
+                    .then(function success(response) {
+
+                        Quagga.onDetected(function (data) {
+                            //console.log(' ===>> Detecting ');
+                            console.log(data.codeResult.code);
+                            if (data.codeResult.code.length > 1) {
+                                Quagga.stop();
+                                $timeout(function () {
+                                    var serial = data.codeResult.code;
+                                    //vm.result = data.codeResult.code;
+                                    vm.isLoading = false;
+                                    getProfileContent(serial);
+                                    //alert(' barcode ::=='+data.codeResult.code);                                
+                                }, 1000);
+                            }
+                        });
+                    }, function fail() {
+
+                    });
+        }
+
+
+    } else {
+
+    }
+
+    function getProfileContent(serial) {
+        CRMService.getProfile(serial)
+                .then(function success(html) {
+                    $('#camera').html(html);
+                }, function fail(e) {
+                    console.log(e);
+                });
+    }
+
+}
 
 function CartController($window, $log, CRMService) {
     var vm = this;
@@ -9,11 +190,7 @@ function CartController($window, $log, CRMService) {
                 vm.storeList = response;
             }, function fail(e) {
                 $log.error(e);
-            })
-            .catch(function (e) {
-                $log.error(e);
             });
-
     this.confirmCart = function () {
         console.log(vm.receive);
         var intormation = {
@@ -24,23 +201,32 @@ function CartController($window, $log, CRMService) {
             receive: vm.receive,
             store: vm.store
         };
-        var isConfirm = $window.confirm('ยืนยันการแลกของรางวัล');
-        if (isConfirm){
-            CRMService.confirmCart(intormation)
-                    .then(function success(response) {
-                        $window.alert(response.message);
-                    }, function fail(e) {
-                        $log.error(e);
-                        $window.alert(e);
-                    })
-                    .catch(function (e) {
-                        $log.error(e);
-                    });
+        console.log('receive ::==' + vm.receive);
+        console.log('point ::==' + vm.point);
+        console.log('store ::==' + vm.store)
+        if (vm.point === undefined || vm.point === 0) {
+            $window.alert('กรุณาเลือกของรางวัลก่อนการยืนยัน');
+        } else if (vm.receive === undefined) {
+            $window.alert('กรุณาเลือก รูปแบบการจัดส่ง');
+        } else if (vm.receive !== undefined && vm.store === undefined) {
+            $window.alert('กรุณาเลือก สาขามารับของรางวัล');
+        } else {
+            var isConfirm = $window.confirm('ยืนยันการแลกของรางวัล');
+            if (isConfirm) {
+                CRMService.confirmCart(intormation)
+                        .then(function success(response) {
+                            $window.alert(response.message);
+                            $window.location.href = response.redirect;
+                        }, function fail(e) {
+                            $log.error(e);
+                            $window.alert(e);
+                        });
+            }
         }
     }
 }
 
-function LoginController($window, $log, $timeout, CRMService) {
+function MemberController($window, $log, $timeout, CRMService) {
     var vm = this;
     this.messageVisible = false;
     this.messageClass = false;
@@ -51,29 +237,32 @@ function LoginController($window, $log, $timeout, CRMService) {
         vm.messageVisible = false;
         var username = vm.username;
         var password = vm.password;
+        var type = (vm.type === undefined ? '' : vm.type);
         if (username === undefined || password === undefined) {
             vm.messageVisible = true;
             vm.title = 'ท่านยังไม่ได้กรอกข้อมูล Username หรือ Password';
             vm.message = 'กรุณากรอกข้อมูลก่อนการ Login';
         } else {
             this.loading = true;
-            CRMService.login(username, password)
+            CRMService.login(username, password, type)
                     .then(function success(response) {
                         vm.messageVisible = true;
                         vm.title = response.title;
                         vm.message = response.message;
                         if (response.status) {
                             vm.messageClass = true;
+
                             $timeout(function () {
-                                vm.loading = false;
-                                $window.location.href = response.redirect;
-                            }, 1000);
+                                //$window.alert(response.message);
+                                if (response.status) {
+                                    $window.location.href = response.redirect;
+                                }
+                            }, 500);
                         }
+                        vm.loading = false;
                     }, function fail(e) {
                         $log.error(e);
-                    }).catch(function (e) {
-                $log.error(e);
-            });
+                    });
         }
 
     }

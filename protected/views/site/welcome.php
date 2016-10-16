@@ -5,8 +5,10 @@ $profile = $member['profile'];
 $point = $member['point'];
 ?>
 <h1 class="ui top attached header clearing">
-    <div class="ui right floated button green">แต้มสะสมของคุณคือ <?= $point ?> แต้ม</div>
-    ยินดีต้อนรับ คุณ <?= $profile['per_fname'] . '     ' . $profile['per_lname'] ?> 
+    <?php if (!empty(Yii::app()->session['member'])) { ?>
+        <div class="ui right floated button green">แต้มสะสมของคุณคือ <?= $point ?> แต้ม</div>    
+        ยินดีต้อนรับ คุณ <?= $profile['per_fname'] . '     ' . $profile['per_lname'] ?> 
+    <?php } ?>
 </h1>
 <div class="ui attached segment">
     <h3>เครื่อสุรพลใจดี แลก Ponts แลกของรางวัลสุดเก๋</h3>
@@ -26,7 +28,7 @@ $point = $member['point'];
                                     <div class="header"><?= $data['gift_point'] ?> คะแนน</div>
                                 </div>
                                 <div class="image">
-                                    <img src="/images/avatar2/large/kristy.png">
+                                    <img src="<?= $baseUrl ?>/images/coming-soon.png">
                                 </div>
                                 <div class="content">
                                     <a class="header"><?= $data['gift_name'] ?></a>
@@ -65,14 +67,14 @@ $point = $member['point'];
                 ของรางวัลสุด Hot 
             </h2>
             <div class="ui attached segment">
-                <div class="ui cards two">
+                <div class="ui cards two stackable">
                     <?php foreach ($giftAll as $index => $data) { ?>
                         <div class="ui card">
                             <div class="content">
                                 <div class="header"><?= $data['gift_point'] ?> คะแนน</div>
                             </div>
                             <div class="image">
-                                <img src="/images/avatar2/large/kristy.png">
+                                <img src="<?= $baseUrl ?>/images/coming-soon.png">
                             </div>
                             <div class="content">
                                 <a class="header"><?= $data['gift_name'] ?></a>

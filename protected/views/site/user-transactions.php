@@ -8,7 +8,7 @@
         <div class="ui large breadcrumb">
             <a class="section" href="<?= $baseUrl ?>/site/index/<?= $serialCode ?>">หน้าหลัก</a>
             <i class="right chevron icon divider"></i>
-            <li class="active section">ข้อมูลประวัติการแลกขอลรางวัล</li>
+            <li class="active section">ข้อมูลการใช้บริการ</li>
         </div>
 
         <table class="ui table celled striped">
@@ -25,9 +25,9 @@
             </thead>
             <tbody>
                 <?php
+                $prices = 0;
+                $points = 0;
                 if (count($tranBuys) > 0) {
-                    $prices = 0;
-                    $points = 0;
                     foreach ($tranBuys as $index => $row) {
                         ?>
                         <tr>

@@ -1,6 +1,7 @@
 <?php
 
 class SiteController extends Controller {
+    
 
     public function actionWelcome() {
         $member = Yii::app()->session['member'];
@@ -36,10 +37,9 @@ class SiteController extends Controller {
             'carts' => $carts
         ));
     }
-    
-    public function actionCartConfirm(){
-        $this->render('/site/cart-confirm',array(
-            
+
+    public function actionCartConfirm() {
+        $this->render('/site/cart-confirm', array(
         ));
     }
 
@@ -108,8 +108,38 @@ class SiteController extends Controller {
                 )
             ));
         } else {
-            $profile = Yii::app()->db->createCommand()
-                    ->select(' p.*
+
+            $profile = $this->getProfileInfo($id);
+            
+            $this->render('/index', array(
+                'serialCode' => $id,
+                'person' => $profile
+            ));
+        }
+    }
+    
+    public function actionProfile($id = null) {
+        if (empty($id)) {
+            $this->render('/exception/exception', array(
+                'response' => array(
+                    'title' => 'เกิดข้อผิดพลาด',
+                    'message' => 'ไม่พบข้อมูล serial ที่ส่งมา'
+                )
+            ));
+        } else {
+
+            $profile = $this->getProfileInfo($id);
+            
+            $this->renderPartial('/index', array(
+                'serialCode' => $id,
+                'person' => $profile
+            ));
+        }
+    }
+
+    private function getProfileInfo($serial) {
+        $profile = Yii::app()->db->createCommand()
+                ->select(' p.*
                                 ,(
                                         (
                                         SELECT SUM(tb.buy_point)
@@ -140,36 +170,31 @@ class SiteController extends Controller {
                                      FROM tran_swop s
                                      WHERE s.per_id = p.per_id
                                 ) as cal_gift ')
-                    ->from('person p')
-                    ->where('per_serial =:serial', array(':serial' => $id))
-                    ->queryRow();
-
-            $this->render('/index', array(
-                'serialCode' => $id,
-                'person' => $profile
-            ));
-        }
+                ->from('person p')
+                ->where('per_serial =:serial', array(':serial' => $serial))
+                ->queryRow();
+        return $profile;
     }
 
     public function actionPoints($id) {
 
         $profilePoints = Yii::app()->db->createCommand()
-                ->select('i.*,
-                 per.*,
+                ->select('
+                tb.*,
+                per.*,
                 pro.*,
-                DATE_FORMAT(tran_date,\'%d-%m-%Y\') as date_points,
-                ROUND((pro.pro_price/t.type_min_price)* t.type_points,0) as cal_points,
-                (CASE tran_status
+                DATE_FORMAT(buy_date,\'%d-%m-%Y\') as date_points,                
+                (CASE buy_status
                     WHEN 1 THEN \'<label class=\"label label-success\">ชำระเงินเรียบร้อย</label>\'
                     WHEN 2 THEN \'<label class=\"label label-danger\">ค้างชำระ</label>\'
                     ELSE \'<label class=\"label label-warning\">อื่น</label>\'
                 END ) as tran_status')
-                ->from('transaction i')
-                ->join('person per', 'per.per_id = i.per_id')
-                ->join('product pro', 'pro.pro_id = i.pro_id')
+                ->from('tran_buy tb')
+                ->leftJoin('person per', 'per.per_id = tb.per_id')
+                ->leftJoin('product pro', 'pro.prod_id = tb.prod_id')
                 ->leftJoin('type t', 't.type_id = pro.type_id')
                 ->where('per.per_serial =:serial', array(':serial' => $id))
-                ->order('tran_date DESC')
+                ->order('tb.buy_date DESC')
                 ->queryAll();
 
 
@@ -230,6 +255,7 @@ class SiteController extends Controller {
         ));
     }
 
+    
     public function actionLogin() {
         $this->render('/login', array());
     }
@@ -237,6 +263,39 @@ class SiteController extends Controller {
     public function actionLogout() {
         unset(YII::app()->session['member']);
         $this->redirect(array('/site/welcome'));
+    }
+
+    public function actionBarcode() {
+        $this->render('/barcode');
+    }
+   
+    
+    public function actionFindCustomer() {
+        $this->render('/site/find-customer');
+    }
+    
+
+    public function actionProductSales() {
+        $stores = Store::model()->findAll();
+        $this->render('/site/product-sales', array(
+            'stores' => $stores,
+        ));
+    }
+
+    public function actionModalFindCustomer() {
+        $this->render('/modal/find-customer', array(
+        ));
+    }
+
+    public function actionModalFindProduct($id = null) {
+        $criteria = new CDbCriteria();
+        if (!empty($id)) {
+            $criteria->compare('prod_name', $id, true);
+        }
+        $products = Product::model()->findAll($criteria);
+        $this->render('/modal/find-product', array(
+            'products' => $products
+        ));
     }
 
     private function getUserProfile($id) {
