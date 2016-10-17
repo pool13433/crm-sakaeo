@@ -99,12 +99,12 @@ class ServiceController extends Controller {
             $menuList = array();
             $menus = Yii::app()->db->createCommand("
                         SELECT 
-                            m.menu_id,m.menu_name,m.menu_href
+                            m.menu_id,m.menu_name,m.menu_href,menu_icon
                         FROM menu m
                         JOIN menu_sub ms ON ms.menu_id = m.menu_id
                         WHERE ms.sub_id IN ($menuGroupId)
                         AND menu_status = 'active' 
-                        GROUP BY    m.menu_id,m.menu_name,m.menu_href
+                        GROUP BY    m.menu_id,m.menu_name,m.menu_href,menu_icon
                         ORDER BY m.menu_seq ASC
                     ")
                     ->queryAll();
@@ -230,6 +230,11 @@ class ServiceController extends Controller {
             'order' => 'store_name DESC'
         ));
         echo CJSON::encode($stores);
+    }
+    
+    public function actionGetPointTypes(){
+        $pointTypes = PointType::model()->findAll();
+        echo CJSON::encode($pointTypes);
     }
 
 }

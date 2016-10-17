@@ -27,7 +27,7 @@ class Menu extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('menu_name, menu_desc,menu_href, menu_date,menu_status', 'required'),
+            array('menu_name, menu_desc,menu_href,menu_icon, menu_date,menu_status', 'required'),
             array('menu_name', 'length', 'max' => 100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -55,7 +55,8 @@ class Menu extends CActiveRecord {
             'menu_desc' => 'Menu Desc',
             'menu_date' => 'Menu Date',
             'menu_status' => 'Menu Status',
-            'menu_href' => 'Menu Href LInk'
+            'menu_href' => 'Menu Href LInk',
+            'menu_icon' => 'Menu Icon'
         );
     }
 

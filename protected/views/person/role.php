@@ -1,8 +1,8 @@
 <?php $baseUrl = Yii::app()->baseUrl; ?>
 
-<h5 class="ui top attached header">
-    จัดการสิทธิการเข้าใช้งาน
-</h5>
+<h3 class="ui top attached header">
+    <u>จัดการสิทธิการเข้าใช้งาน</u>
+</h3>
 <div class="ui attached segment">
     <table class="ui table celled striped">
         <thead>
@@ -26,7 +26,7 @@
                         <td><?= $row['per_mobile'] ?></td>
                         <td><?= $row['per_status'] ?></td>
                         <td><?= $row['privilege'] ?></td>
-                        <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/person/RoleInfo/<?= $row['per_id'] ?>">
+                        <td><a  class="ui icon button yellow tiny"  href="<?= $baseUrl ?>/person/RoleInfo/<?= $row['per_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>
                         </td>

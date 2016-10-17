@@ -31,13 +31,13 @@ class MenuSub extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('sub_name, sub_desc, sub_href, sub_date, sub_seq, sub_status, menu_id', 'required'),
+            array('sub_name, sub_desc, sub_href,sub_icon, sub_date, sub_seq, sub_status, menu_id', 'required'),
             array('sub_seq, menu_id', 'numerical', 'integerOnly' => true),
             array('sub_name, sub_href', 'length', 'max' => 100),
             array('sub_status', 'length', 'max' => 8),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('sub_id, sub_name, sub_desc, sub_href, sub_date, sub_seq, sub_status, menu_id', 'safe', 'on' => 'search'),
+            array('sub_id, sub_name, sub_desc, sub_href,sub_icon, sub_date, sub_seq, sub_status, menu_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,6 +60,7 @@ class MenuSub extends CActiveRecord {
             'sub_name' => 'Sub Name',
             'sub_desc' => 'Sub Desc',
             'sub_href' => 'Sub Href',
+            'sub_icon' => 'Sub Icon',
             'sub_date' => 'Sub Date',
             'sub_seq' => 'Sub Seq',
             'sub_status' => 'Sub Active',
@@ -88,6 +89,7 @@ class MenuSub extends CActiveRecord {
         $criteria->compare('sub_name', $this->sub_name, true);
         $criteria->compare('sub_desc', $this->sub_desc, true);
         $criteria->compare('sub_href', $this->sub_href, true);
+        $criteria->compare('sub_icon', $this->sub_icon, true);
         $criteria->compare('sub_date', $this->sub_date, true);
         $criteria->compare('sub_seq', $this->sub_seq);
         $criteria->compare('sub_status', $this->sub_status, true);

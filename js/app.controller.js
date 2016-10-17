@@ -1,7 +1,39 @@
 app.controller('MemberController', MemberController)
         .controller('CartController', CartController)
         .controller('BarcodeController', BarcodeController)
-        .controller('SalesController', SalesController);
+        .controller('SalesController', SalesController)
+        .controller('PointController', PointController);
+function PointController($log, $window) {
+    var vm = this;
+
+    this.selectedOption = function () {
+        console.log(vm.ddOption);
+        if (vm.ddOption !== undefined) {
+            $('.options').hide();
+            $('.options').css({visibility: 'hidden'});
+            $('#option' + vm.ddOption).show();
+            $('#option' + vm.ddOption).css({visibility: 'visible'});
+        }
+    }
+
+    $('form[name="frmPoint"]').submit(function () {
+        var pointTypeId = vm.ddOption;
+        console.log('ddOption ::==' + pointTypeId);
+        var pointCase = $('#point_case' + pointTypeId).val();
+        var pointResult = $('#point_result' + pointTypeId).val();
+        var pointStartDate = $('#point_startdate' + pointTypeId).val();
+        var pointEndDate = $('#point_enddate' + pointTypeId).val();
+        console.log('pointCase ::==' + pointCase);
+        console.log('pointResult ::==' + pointResult);
+        console.log('pointStartDate ::==' + pointStartDate);
+        console.log('pointEndDate ::==' + pointEndDate);
+        if (pointCase === '' || pointResult === '' || pointStartDate === '' || pointEndDate === '') {
+            $window.alert('กรุณากรอกข้อมูลเงื่อนไขการให้ Point ให้ครบถ้วน');
+            return false;
+        }
+        return false;
+    });
+}
 
 function SalesController(CRMService, QuaggsJSService, $log, $window, $timeout) {
     var vm = this;
@@ -251,7 +283,6 @@ function MemberController($window, $log, $timeout, CRMService) {
                         vm.message = response.message;
                         if (response.status) {
                             vm.messageClass = true;
-
                             $timeout(function () {
                                 //$window.alert(response.message);
                                 if (response.status) {

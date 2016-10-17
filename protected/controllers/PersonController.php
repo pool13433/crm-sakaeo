@@ -6,6 +6,7 @@ class PersonController extends Controller {
 
         $personRoles = Yii::app()->db->createCommand()
                 ->select(" p.*, (select priv_desc from menu_privilege mp where mp.priv_id = p.priv_id ) as privilege
+                          
                        ")                
                 ->from('person p')
                 ->order(' per_serial ASC')
@@ -17,7 +18,17 @@ class PersonController extends Controller {
     }
 
     public function actionRoleInfo($id) {
-        $person = Person::model()->findByPk($id);
+        $person = Yii::app()->db->createCommand()
+                ->select(" p.*
+                         ,( CASE p.per_status
+                                WHEN 1 THEN 'Administrator'
+                                WHEN 2 THEN 'Customer'
+                                END 
+                             )   as per_status
+                         ")
+                ->from('person p')
+                ->where('p.per_id =:perId', array(':perId' => $id))
+                ->queryRow();
         $profiles = MenuPrivilege::model()->findAll();
         $this->render('/person/role_info', array(
             'profile' => $profiles,

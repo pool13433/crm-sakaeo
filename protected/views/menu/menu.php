@@ -1,9 +1,9 @@
 <?php $baseUrl = Yii::app()->baseUrl; ?>
-<h5 class="ui top attached header">
-    จัดการเมนูสำหรับผู้ใช้งาน
-</h5>
+<h3 class="ui top attached header">
+    <u>กำหนดสิทธิการเข้าใช้งาน</u>
+</h3>
 <div class="ui attached segment">
-    <a href="<?= $baseUrl ?>/menu/FormMenu" class="ui labeled icon button blue">
+    <a href="<?= $baseUrl ?>/menu/FormMenu" class="ui icon button green tiny">
         <i class="plus icon"></i> เพิ่มใหม่
     </a>
     <table class="ui table celled striped">
@@ -29,11 +29,11 @@
                         <td><?= $row['priv_name'] ?></td>
                         <td><?= $row['priv_desc'] ?></td>
                         <td><?= $row['priv_status'] ?></td>
-                        <td><a  class="ui labeled icon button teal"  href="<?= $baseUrl ?>/menu/FormMenu/<?= $row['priv_id'] ?>">
+                        <td><a  class="ui icon button yellow tiny"  href="<?= $baseUrl ?>/menu/FormMenu/<?= $row['priv_id'] ?>">
                                 <i class="pencil icon"></i> แก้ไข
                             </a>
                         </td>
-                        <td><a  class="ui labeled icon button red"  href="<?= $baseUrl ?>/menu/DeleteMenu/<?= $row['priv_id'] ?>" onclick="return confirm('ยืนยันการลบ')">
+                        <td><a  class="ui icon button red tiny"  href="<?= $baseUrl ?>/menu/DeleteMenu/<?= $row['priv_id'] ?>" onclick="return confirm('ยืนยันการลบ')">
                                 <i class="remove icon"></i> ลบ
                             </a>
                         </td>

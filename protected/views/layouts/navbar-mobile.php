@@ -35,7 +35,7 @@
                     <div class="menu">
                         <?php foreach ($mn['subMenu'] as $index => $sub) { ?>
                             <a class="item" href="<?= $baseUrl ?><?= $sub['sub_href'] ?>">
-                                <i class="glyphicon glyphicon-th-large"></i> <?= $sub['sub_name'] ?>
+                                <i class="icon <?=$sub['sub_icon']?>"></i> <?= $sub['sub_name'] ?>
                             </a>                    
                         <?php } ?>
                     </div>

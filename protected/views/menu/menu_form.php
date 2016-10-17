@@ -1,9 +1,9 @@
 <?php $baseUrl = Yii::app()->baseUrl; ?>
-<h5 class="ui top attached header">
-    จัดการเมนูสำหรับผู้ใช้งาน
-</h5>
+<h3 class="ui top attached header">
+   <u>กำหนดสิทธิการเข้าใช้งาน</u>
+</h3>
 <div class="ui attached segment">
-    <a href="<?= $baseUrl ?>/menu/menu" class="ui labeled icon button blue">
+    <a href="<?= $baseUrl ?>/menu/menu" class="ui icon button grey tiny">
         <i class="arrow left icon"></i> ย้อนกลับ
     </a>
     <div class="ui divider"></div>
@@ -11,19 +11,20 @@
         <div class="fields">
             <div  class="ten wide field">
                 <div class="field">
-                    <h3 for="priv_name">ชื่อของเมนู <stong style="color:red;">*</stong></h3>
+                    <h3 for="priv_name">ชื่อสิทธิการเข้าใช้งาน <stong style="color:red;">*</stong></h3>
                     <input type="hidden" name="data[priv_id]" value="<?= $menuPrivilege->priv_id ?>">
-                    <input type="text" class="form-control" name="data[priv_name]" placeholder="ชื่อของเมนู" required value="<?= $menuPrivilege->priv_name ?>">
+                    <input type="text" class="form-control" name="data[priv_name]" placeholder="ชื่อสิทธิการเข้าใช้งาน" required value="<?= $menuPrivilege->priv_name ?>">
                 </div>
                 <div class="field">
-                    <h3 for="priv_name">รายละเอียดของเมนู </h3>
-                    <textarea  name="data[priv_desc]"  placeholder="รายละเอียดของเมนู"><?= $menuPrivilege->priv_desc ?></textarea>
+                    <h3 for="priv_name">รายละเอียดสิทธิการเข้าใช้งาน </h3>
+                    <textarea  name="data[priv_desc]"  placeholder="รายละเอียดสิทธิการเข้าใช้งาน"><?= $menuPrivilege->priv_desc ?></textarea>
                 </div>
                 <div class="field">
-                    <h3 for="fruit">สถานะของ เมนู <stong style="color:red;">*</stong></h3>
+                    <h3 for="fruit">สถานะของสิทธิการเข้าใช้งาน <stong style="color:red;">*</stong></h3>
                     <div class="field">
                         <div class="ui radio checkbox">
-                            <input name="data[priv_status]" <?=($menuPrivilege['priv_status'] == 'active' ? 'checked' : '')?> tabindex="0"  type="radio" required value="active">
+                            <input name="data[priv_status]" <?=($menuPrivilege['priv_status'] == 'active'  || empty($menuPrivilege['priv_status']) ? 'checked' : '')?> 
+                                   tabindex="0"  type="radio" required value="active">
                             <label>เปิด</label>
                         </div>
                         <div class="ui radio checkbox">
@@ -52,7 +53,7 @@
                 <?php } ?>         
             </div>
         </div>
-        <button type="submit" class="ui button green" onclick="return confirm('บันทึก ?')">
+        <button type="submit" class="ui button green">
             <i class="save icon"></i> บันทึก
         </button>
         <button type="reset" class="ui button orange">

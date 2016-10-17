@@ -6,7 +6,7 @@ class MenuController extends Controller {
         $menus = Yii::app()->db->createCommand()
                 ->select(" mp.*,
                             (CASE mp.priv_status 
-                                WHEN 'active' THEN '<a class=\"ui green label\">เปิดการใช้งาน</a>'
+                                WHEN 'active' THEN '<a class=\"ui olive label\">เปิดการใช้งาน</a>'
                                 WHEN 'inactive' THEN '<a class=\"ui red label\">ปิดการใชงาน</a>'
                              END) as   priv_status
                         ")

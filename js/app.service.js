@@ -115,6 +115,15 @@ function CRMService($q, URL_SERVICE) {
             });
             return defer.promise;
         },
+        getPointTypes: function () {
+            var defer = $q.defer();
+            $.post(URL_SERVICE + '/service/GetPointTypes', {}, function (response) {
+                defer.resolve(response);
+            }, 'json').fail(function (e) {
+                defer.reject(e);
+            });
+            return defer.promise;
+        },
         getProfile: function (serialCode) {
             var defer = $q.defer();
             $.post(URL_SERVICE + '/site/profile/' + serialCode, {}, function (response) {
